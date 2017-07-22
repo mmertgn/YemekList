@@ -1,4 +1,4 @@
-package com.example.mert.yemeklist;
+package com.gun.mert.yemeklist;
 
 import org.junit.Test;
 

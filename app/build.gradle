@@ -4,12 +4,12 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "com.example.mert.yemeklist"
+        applicationId "com.gun.mert.yemeklist"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        multiDexEnabled false
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -36,5 +36,6 @@ dependencies {
     compile 'org.jsoup:jsoup:1.7.3'
     compile 'com.android.support:design:23.1.1'
     compile 'com.github.medyo:android-about-page:1.2'
+    compile 'com.google.android.gms:play-services-ads:11.0.0'
     testCompile 'junit:junit:4.12'
 }

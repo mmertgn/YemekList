@@ -1,4 +1,4 @@
-package com.example.mert.yemeklist;
+package com.gun.mert.yemeklist;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,11 +28,11 @@ public class Hakkimizda extends AppCompatActivity {
                 .addGroup("Bize Ulaşın")
                 .addEmail("m.mertgn@gmail.com")
                 .addWebsite("http://mertgun.net/")
-                .addFacebook("https://www.facebook.com/mert.gun.125")
-                .addTwitter("https://twitter.com/MertGn2")
+                .addFacebook("mert.gun.125")
+                .addTwitter("MertGn2")
                 .addYoutube("mertgun")
                 .addPlayStore("com.mert.kbuyemek")
-                .addInstagram("https://www.instagram.com/mertgun2/")
+                .addInstagram("mertgun2")
                 .addGitHub("mertgun")
                 .create();
         setContentView(aboutPage);

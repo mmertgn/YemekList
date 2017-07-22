@@ -1,4 +1,4 @@
-package com.example.mert.yemeklist;
+package com.gun.mert.yemeklist;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.mert.yemeklist", appContext.getPackageName());
+        assertEquals("com.gun.mert.yemeklist", appContext.getPackageName());
     }
 }

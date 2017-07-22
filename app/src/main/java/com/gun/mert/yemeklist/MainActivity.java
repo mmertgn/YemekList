@@ -1,4 +1,4 @@
-package com.example.mert.yemeklist;
+package com.gun.mert.yemeklist;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -53,23 +56,30 @@ public class MainActivity extends AppCompatActivity {
     private Button btntoday;
     private TextView textView;
     private int bugun;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
         btnileri = (Button) findViewById(R.id.btn_ileri);
         btngeri = (Button) findViewById(R.id.btn_geri);
         btntoday = (Button) findViewById(R.id.btn_today);
         textView = (TextView) findViewById(R.id.textView);
         if (isNetworkConnected()){
             new linkcek().execute();
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
             btnileri.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {
                     increment++;
                     loadList(increment);
                     CheckEnable();
+                    showInterstitial();
                 }
             });
 
@@ -79,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     increment--;
                     loadList(increment);
                     CheckEnable();
+                    showInterstitial();
                 }
             });
 
@@ -101,6 +112,13 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
         }
 
+    }
+    private void showInterstitial() {
+        // Show the ad if it's ready. Otherwise toast and restart the game.
+        if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+        }
     }
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -228,7 +246,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(Void aVoid) {
             list = (ListView) findViewById(R.id.listview);
