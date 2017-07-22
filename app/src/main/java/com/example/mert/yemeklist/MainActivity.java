@@ -281,26 +281,46 @@ public class MainActivity extends AppCompatActivity {
                 liste2.add(str);
                 str = mylist.get(j+25);
                 liste2.add(str);
-            }/*
-            for(int j=121;j<=126;j++)
-            {
-                String str = mylist.get(j);
-                liste2.add(str);
-                str = mylist.get(j+5);
-                liste2.add(str);
-                str = mylist.get(j+10);
-                liste2.add(str);
-                str = mylist.get(j+15);
-                liste2.add(str);
-                str = mylist.get(j+20);
-                liste2.add(str);
-                str = mylist.get(j+25);
-                liste2.add(str);
-            }*/
-            System.out.println(liste2+"\n");
+            }
+            if (mylist.size()==127){
+                for(int j=121;j<=126;j++) {
+                    String str = mylist.get(j);
+                    liste2.add(str);
+                }
+            }else if(mylist.size()==133){
+                for(int j=121;j<=122;j++) {
+                    String str = mylist.get(j);
+                    liste2.add(str);
+                    str = mylist.get(j+2);
+                    liste2.add(str);
+                    str = mylist.get(j+4);
+                    liste2.add(str);
+                    str = mylist.get(j+6);
+                    liste2.add(str);
+                    str = mylist.get(j+8);
+                    liste2.add(str);
+                    str = mylist.get(j+10);
+                    liste2.add(str);
+                }
+            }
+            else if(mylist.size()==139){
+                for(int j=121;j<=123;j++) {
+                    String str = mylist.get(j);
+                    liste2.add(str);
+                    str = mylist.get(j+3);
+                    liste2.add(str);
+                    str = mylist.get(j+5);
+                    liste2.add(str);
+                    str = mylist.get(j+7);
+                    liste2.add(str);
+                    str = mylist.get(j+9);
+                    liste2.add(str);
+                    str = mylist.get(j+11);
+                    liste2.add(str);
+                }
+            }
             TOTAL_LIST_ITEMS = liste2.size();
             pageCount = TOTAL_LIST_ITEMS/NUM_ITEMS_PAGE;
-            System.out.println("page : " + pageCount);
         }
 
         public int gunubul(){
