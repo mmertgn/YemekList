@@ -1,11 +1,14 @@
 package com.example.mert.yemeklist;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -58,37 +62,50 @@ public class MainActivity extends AppCompatActivity {
         btngeri = (Button) findViewById(R.id.btn_geri);
         btntoday = (Button) findViewById(R.id.btn_today);
         textView = (TextView) findViewById(R.id.textView);
-        new linkcek().execute();
-        btnileri.setOnClickListener(new View.OnClickListener() {
+        if (isNetworkConnected()){
+            new linkcek().execute();
+            btnileri.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View v) {
-                increment++;
-                loadList(increment);
-                CheckEnable();
-            }
-        });
+                public void onClick(View v) {
+                    increment++;
+                    loadList(increment);
+                    CheckEnable();
+                }
+            });
 
-        btngeri.setOnClickListener(new View.OnClickListener() {
+            btngeri.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View v) {
+                public void onClick(View v) {
+                    increment--;
+                    loadList(increment);
+                    CheckEnable();
+                }
+            });
 
-                increment--;
-                loadList(increment);
-                CheckEnable();
-            }
-        });
+            btntoday.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    list.setAdapter(null);
+                    linkcek gunobject = new linkcek();
+                    gunobject.gunubul();
+                    loadList(gunIndex);
+                    CheckEnable();
+                }
+            });
+        }else {
+            btntoday.setEnabled(false);
+            btnileri.setEnabled(false);
+            btngeri.setEnabled(false);
+            Toast toast = Toast.makeText(getApplicationContext(),"Uygulamayı kullanbilmek için internet bağlantısı gerekmektedir...",Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER,Gravity.CENTER,Gravity.CENTER);
+            toast.show();
+        }
 
-        btntoday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                list.setAdapter(null);
-                linkcek gunobject = new linkcek();
-                gunobject.gunubul();
-                loadList(gunIndex);
-                CheckEnable();
-            }
-        });
+    }
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        return cm.getActiveNetworkInfo() != null;
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -171,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPreExecute();
             progressDialog = new ProgressDialog(MainActivity.this);
             progressDialog.setTitle("Yemek Listesi");
-            progressDialog.setMessage("Liste İndiriliyor ve İşleniyor...");
+            progressDialog.setMessage("İndiriliyor ve İşleniyor...");
             progressDialog.setIndeterminate(false);
             progressDialog.show();
         }
@@ -330,7 +347,6 @@ public class MainActivity extends AppCompatActivity {
             }else if (Calendar.DAY_OF_WEEK == Calendar.SATURDAY) {
                 bugun = bugun+2;
             }
-            System.out.println(bugun);
             for (int i = 0;i<liste2.size();i++){
                 String[] parcala = liste2.get(i).split(" ");
                 try {
@@ -345,7 +361,5 @@ public class MainActivity extends AppCompatActivity {
             }
             return 0;
         }
-
-
     }
 }
