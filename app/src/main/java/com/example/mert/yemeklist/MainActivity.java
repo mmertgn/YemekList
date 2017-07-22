@@ -325,6 +325,11 @@ public class MainActivity extends AppCompatActivity {
 
         public int gunubul(){
             bugun = Calendar.getInstance().get(Calendar.DATE);
+            if (Calendar.DAY_OF_WEEK == Calendar.SUNDAY) {
+                bugun = 1+bugun;
+            }else if (Calendar.DAY_OF_WEEK == Calendar.SATURDAY) {
+                bugun = bugun+2;
+            }
             System.out.println(bugun);
             for (int i = 0;i<liste2.size();i++){
                 String[] parcala = liste2.get(i).split(" ");
