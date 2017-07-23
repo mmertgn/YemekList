@@ -14,7 +14,7 @@ public class Hakkimizda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Element versionElement = new Element();
-        versionElement.setTitle("Sürüm 1.1");
+        versionElement.setTitle("Sürüm 1.2");
 
         Element adsElement = new Element();
         adsElement.setTitle("Mustafa Mert Gün");
@@ -30,10 +30,8 @@ public class Hakkimizda extends AppCompatActivity {
                 .addWebsite("http://mertgun.net/")
                 .addFacebook("mert.gun.125")
                 .addTwitter("MertGn2")
-                .addYoutube("mertgun")
                 .addPlayStore("com.gun.mert.yemeklist")
                 .addInstagram("mertgun2")
-                .addGitHub("mmertgn")
                 .create();
         setContentView(aboutPage);
     }
