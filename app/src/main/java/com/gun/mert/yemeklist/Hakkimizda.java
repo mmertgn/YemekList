@@ -22,7 +22,7 @@ public class Hakkimizda extends AppCompatActivity {
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
                 .setImage(R.drawable.simge)
-                .setDescription("Karabük Üniversitesi yemekhanesinde verilen yemeklerin güncel listesinin bulunduğu uygulamamı kullandığınız için teşekkür ederim. Uygulama otomatik olarak okul tarafından yayınlanan programı çekip listelemektedir. Hiç bir zaman güncelliğini kaybetme gibi bir durum ortaya çıkarmayacaktır.\n")
+                .setDescription("Karabük Üni. yemekhanesinde verilen yemeklerin güncel listesinin bulunduğu uygulamamı kullandığınız için teşekkür ederim. Uygulama otomatik olarak okul tarafından yayınlanan programı çekip listelemektedir. Hiç bir zaman güncelliğini kaybetme gibi bir durum ortaya çıkarmayacaktır.\n")
                 .addItem(versionElement)
                 .addItem(adsElement)
                 .addGroup("Bize Ulaşın")
