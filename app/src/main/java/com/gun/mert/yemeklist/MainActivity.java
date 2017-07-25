@@ -255,74 +255,74 @@ public class MainActivity extends AppCompatActivity {
             textView.setVisibility(View.INVISIBLE);
         }
 
-        public void listeduzenle(ArrayList<String> mylist){
-            for(int j=1;j<=5;j++)
-            {
-                String str = mylist.get(j);
-                liste2.add(str);
-                str = mylist.get(j+5);
-                liste2.add(str);
-                str = mylist.get(j+10);
-                liste2.add(str);
-                str = mylist.get(j+15);
-                liste2.add(str);
-                str = mylist.get(j+20);
-                liste2.add(str);
-                str = mylist.get(j+25);
-                liste2.add(str);
+        public void listeduzenle(ArrayList<String> mylist) {
+            int gunsayac=0,gunsayac2=0;
+            int y=0;
+            int lastindex=0,lastindex2=0,lastindex3=0;
+            String tarih1 = "2017";
+            String tarih2 = "2018";
+            String tarih3 = "2019";
+            for(int i=1;i<=5;i++){
+                String[] parcala = mylist.get(i).split(" ");
+                for(y=0;y<parcala.length;y++){
+                    if(parcala[y].equals(tarih1) || parcala[y].equals(tarih2)|| parcala[y].equals(tarih3)){
+                        gunsayac++;
+                    }
+                }
             }
-            for(int j=31;j<=35;j++)
-            {
-                String str = mylist.get(j);
-                liste2.add(str);
-                str = mylist.get(j+5);
-                liste2.add(str);
-                str = mylist.get(j+10);
-                liste2.add(str);
-                str = mylist.get(j+15);
-                liste2.add(str);
-                str = mylist.get(j+20);
-                liste2.add(str);
-                str = mylist.get(j+25);
-                liste2.add(str);
-            }
-            for(int j=61;j<=65;j++)
-            {
-                String str = mylist.get(j);
-                liste2.add(str);
-                str = mylist.get(j+5);
-                liste2.add(str);
-                str = mylist.get(j+10);
-                liste2.add(str);
-                str = mylist.get(j+15);
-                liste2.add(str);
-                str = mylist.get(j+20);
-                liste2.add(str);
-                str = mylist.get(j+25);
-                liste2.add(str);
-            }
-            for(int j=91;j<=95;j++)
-            {
-                String str = mylist.get(j);
-                liste2.add(str);
-                str = mylist.get(j+5);
-                liste2.add(str);
-                str = mylist.get(j+10);
-                liste2.add(str);
-                str = mylist.get(j+15);
-                liste2.add(str);
-                str = mylist.get(j+20);
-                liste2.add(str);
-                str = mylist.get(j+25);
-                liste2.add(str);
-            }
-            if (mylist.size()==127){
-                for(int j=121;j<=126;j++) {
+
+            System.out.println(gunsayac);
+            if(gunsayac == 5){
+                for(int j=1;j<=5;j++)
+                {
                     String str = mylist.get(j);
                     liste2.add(str);
+                    str = mylist.get(j+5);
+                    liste2.add(str);
+                    str = mylist.get(j+10);
+                    liste2.add(str);
+                    str = mylist.get(j+15);
+                    liste2.add(str);
+                    str = mylist.get(j+20);
+                    liste2.add(str);
+                    str = mylist.get(j+25);
+                    liste2.add(str);
                 }
-            }else if(mylist.size()==133){
-                for(int j=121;j<=122;j++) {
+            } else if(gunsayac == 4){
+                for(int j=1;j<=4;j++)
+                {
+                    String str = mylist.get(j);
+                    liste2.add(str);
+                    str = mylist.get(j+4);
+                    liste2.add(str);
+                    str = mylist.get(j+8);
+                    liste2.add(str);
+                    str = mylist.get(j+12);
+                    liste2.add(str);
+                    str = mylist.get(j+16);
+                    liste2.add(str);
+                    str = mylist.get(j+20);
+                    liste2.add(str);
+                }
+            }  else if(gunsayac == 3){
+                for(int j=1;j<=3;j++)
+                {
+                    String str = mylist.get(j);
+                    liste2.add(str);
+                    str = mylist.get(j+3);
+                    liste2.add(str);
+                    str = mylist.get(j+6);
+                    liste2.add(str);
+                    str = mylist.get(j+9);
+                    liste2.add(str);
+                    str = mylist.get(j+12);
+                    liste2.add(str);
+                    str = mylist.get(j+15);
+                    liste2.add(str);
+                }
+            }  else if(gunsayac == 2){
+                for(int j=1;j<=2;j++)
+                {
                     String str = mylist.get(j);
                     liste2.add(str);
                     str = mylist.get(j+2);
@@ -336,20 +336,141 @@ public class MainActivity extends AppCompatActivity {
                     str = mylist.get(j+10);
                     liste2.add(str);
                 }
+            }  else if(gunsayac == 1){
+                for(int x=1;x<=6;x++)
+                {
+                    String str = mylist.get(x);
+                    liste2.add(str);
+                }
             }
-            else if(mylist.size()==139){
-                for(int j=121;j<=123;j++) {
+            for(int j=gunsayac*6+1;j<=gunsayac*6+5;j++)
+            {
+                String str = mylist.get(j);
+                liste2.add(str);
+                str = mylist.get(j+5);
+                liste2.add(str);
+                str = mylist.get(j+10);
+                liste2.add(str);
+                str = mylist.get(j+15);
+                liste2.add(str);
+                str = mylist.get(j+20);
+                liste2.add(str);
+                str = mylist.get(j+25);
+                liste2.add(str);
+                lastindex=j+25;
+            }
+
+            for(int j=1+lastindex;j<=lastindex+5;j++)
+            {
+                String str = mylist.get(j);
+                liste2.add(str);
+                str = mylist.get(j+5);
+                liste2.add(str);
+                str = mylist.get(j+10);
+                liste2.add(str);
+                str = mylist.get(j+15);
+                liste2.add(str);
+                str = mylist.get(j+20);
+                liste2.add(str);
+                str = mylist.get(j+25);
+                liste2.add(str);
+                lastindex2=j+25;
+            }
+
+
+            for(int j=lastindex2+1;j<=lastindex2+5;j++)
+            {
+                String str = mylist.get(j);
+                liste2.add(str);
+                str = mylist.get(j+5);
+                liste2.add(str);
+                str = mylist.get(j+10);
+                liste2.add(str);
+                str = mylist.get(j+15);
+                liste2.add(str);
+                str = mylist.get(j+20);
+                liste2.add(str);
+                str = mylist.get(j+25);
+                liste2.add(str);
+                lastindex3=j+25;
+            }
+
+            for(int i=lastindex3+1;i<=lastindex3+5;i++){
+                String[] parcala = mylist.get(i).split(" ");
+                for(y=0;y<parcala.length;y++){
+                    if(parcala[y].equals(tarih1) || parcala[y].equals(tarih2)|| parcala[y].equals(tarih3)){
+                        gunsayac2++;
+                    }
+                }
+            }
+            if(gunsayac2 == 5){
+                for(int j=lastindex3+1;j<=lastindex3+5;j++)
+                {
+                    String str = mylist.get(j);
+                    liste2.add(str);
+                    str = mylist.get(j+5);
+                    liste2.add(str);
+                    str = mylist.get(j+10);
+                    liste2.add(str);
+                    str = mylist.get(j+15);
+                    liste2.add(str);
+                    str = mylist.get(j+20);
+                    liste2.add(str);
+                    str = mylist.get(j+25);
+                    liste2.add(str);
+                }
+            } else if(gunsayac2 == 4){
+                for(int j=lastindex3+1;j<=lastindex3+4;j++)
+                {
+                    String str = mylist.get(j);
+                    liste2.add(str);
+                    str = mylist.get(j+4);
+                    liste2.add(str);
+                    str = mylist.get(j+8);
+                    liste2.add(str);
+                    str = mylist.get(j+12);
+                    liste2.add(str);
+                    str = mylist.get(j+16);
+                    liste2.add(str);
+                    str = mylist.get(j+20);
+                    liste2.add(str);
+                }
+            }  else if(gunsayac2 == 3){
+                for(int j=lastindex3+1;j<=lastindex3+3;j++)
+                {
                     String str = mylist.get(j);
                     liste2.add(str);
                     str = mylist.get(j+3);
                     liste2.add(str);
-                    str = mylist.get(j+5);
-                    liste2.add(str);
-                    str = mylist.get(j+7);
+                    str = mylist.get(j+6);
                     liste2.add(str);
                     str = mylist.get(j+9);
                     liste2.add(str);
-                    str = mylist.get(j+11);
+                    str = mylist.get(j+12);
+                    liste2.add(str);
+                    str = mylist.get(j+15);
+                    liste2.add(str);
+                }
+            }  else if(gunsayac2 == 2){
+                for(int j=lastindex3+1;j<=lastindex3+2;j++)
+                {
+                    String str = mylist.get(j);
+                    liste2.add(str);
+                    str = mylist.get(j+2);
+                    liste2.add(str);
+                    str = mylist.get(j+4);
+                    liste2.add(str);
+                    str = mylist.get(j+6);
+                    liste2.add(str);
+                    str = mylist.get(j+8);
+                    liste2.add(str);
+                    str = mylist.get(j+10);
+                    liste2.add(str);
+                }
+            }  else if(gunsayac2 == 1){
+                for(int x=lastindex3+1;x<=lastindex3+6;x++)
+                {
+                    String str = mylist.get(x);
                     liste2.add(str);
                 }
             }
