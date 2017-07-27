@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -62,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        MobileAds.initialize(this, "ca-app-pub-1016425908924617~6563484486");
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-
+        mInterstitialAd.setAdUnitId("ca-app-pub-1016425908924617/4150387210");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
         btnileri = (Button) findViewById(R.id.btn_ileri);
         btngeri = (Button) findViewById(R.id.btn_geri);
         btntoday = (Button) findViewById(R.id.btn_today);
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
         }
     }
+
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 

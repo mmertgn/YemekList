@@ -14,7 +14,7 @@ public class Hakkimizda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Element versionElement = new Element();
-        versionElement.setTitle("Sürüm 1.2");
+        versionElement.setTitle("Sürüm 1.5");
 
         Element adsElement = new Element();
         adsElement.setTitle("Mustafa Mert Gün");
