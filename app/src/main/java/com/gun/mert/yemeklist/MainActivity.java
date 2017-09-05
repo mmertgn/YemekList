@@ -22,6 +22,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
+import org.apache.poi.ss.formula.functions.Column;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -220,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
                 Elements info = doc.select("li[id=23XxX");
                 Elements info2 = info.select("a[class=menuStil1");
                 link1 = info2.attr("href");
+                System.out.println("link:"+link1);
                 URL url = new URL("http://sks.karabuk.edu.tr"+link1);
 
                 InputStream inputStream = url.openStream();
@@ -241,13 +243,54 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+                tatilatici(mylist);
                 listeduzenle(mylist);
 
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }/*
+            for (int i=1;i<mylist.size();i++){
+                System.out.println(mylist.get(i)+": "+i);
+            }*/
             return null;
         }
+
+        private void tatilatici(ArrayList<String> mylist) {
+            ArrayList bulunanindex = new ArrayList();
+            int bulunan = 0;
+            for (int i=1;i<mylist.size();i++){
+                System.out.println(mylist.get(i)+": "+i);
+                if(mylist.get(i).equals("RESMİ TATİL") || mylist.get(i).equals("RESMI TATIL") || mylist.get(i).equals("TATİL") ){
+                    bulunanindex.add(i);
+                    bulunan = i;
+                }
+            }
+            if (bulunan == 14 || bulunan == 44 || bulunan == 74 || bulunan==104 ){
+                for (int i =0;i<bulunanindex.size();i++){
+                    mylist.add((Integer) bulunanindex.get(i)-8,"-");
+                    mylist.add((Integer) bulunanindex.get(i)-3,"-");
+                    mylist.add((Integer) bulunanindex.get(i)+7,"-");
+                    mylist.add((Integer) bulunanindex.get(i)+12,"-");
+                }
+            }else if (bulunan == 15 || bulunan == 45 || bulunan == 75 || bulunan==105){
+                for (int i =0;i<bulunanindex.size();i++){
+                    mylist.add((Integer) bulunanindex.get(i)-3,"-");
+                    mylist.add((Integer) bulunanindex.get(i)+5,"-");
+                    mylist.add((Integer) bulunanindex.get(i)+9,"-");
+                    mylist.add((Integer) bulunanindex.get(i)+13,"-");
+                }
+            }else if (bulunan == 16 || bulunan == 46 || bulunan == 76 || bulunan==106){
+// TODO: 6.09.2017 Tatil kodu eklenecek 
+            }else if (bulunan == 17 || bulunan == 47 || bulunan == 77 || bulunan==107){
+// TODO: 6.09.2017 tatil kodu eklenecek 
+            }else if (bulunan == 18 || bulunan == 48 || bulunan == 78 || bulunan==108){
+// TODO: 6.09.2017 tatil kodu eklenecek 
+            }
+            /*for (int i=1;i<mylist.size();i++){
+                System.out.println(mylist.get(i)+": "+i);
+            }*/
+        }
+
         @Override
         protected void onPostExecute(Void aVoid) {
             list = (ListView) findViewById(R.id.listview);
@@ -273,72 +316,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            System.out.println(gunsayac);
-            if(gunsayac == 5){
-                for(int j=1;j<=5;j++)
+            if(gunsayac > 1){
+                for(int j=1;j<=gunsayac;j++)
                 {
                     String str = mylist.get(j);
                     liste2.add(str);
-                    str = mylist.get(j+5);
+                    str = mylist.get(j+gunsayac);
                     liste2.add(str);
-                    str = mylist.get(j+10);
+                    str = mylist.get(j+gunsayac*2);
                     liste2.add(str);
-                    str = mylist.get(j+15);
+                    str = mylist.get(j+gunsayac*3);
                     liste2.add(str);
-                    str = mylist.get(j+20);
+                    str = mylist.get(j+gunsayac*4);
                     liste2.add(str);
-                    str = mylist.get(j+25);
-                    liste2.add(str);
-                }
-            } else if(gunsayac == 4){
-                for(int j=1;j<=4;j++)
-                {
-                    String str = mylist.get(j);
-                    liste2.add(str);
-                    str = mylist.get(j+4);
-                    liste2.add(str);
-                    str = mylist.get(j+8);
-                    liste2.add(str);
-                    str = mylist.get(j+12);
-                    liste2.add(str);
-                    str = mylist.get(j+16);
-                    liste2.add(str);
-                    str = mylist.get(j+20);
+                    str = mylist.get(j+gunsayac*5);
                     liste2.add(str);
                 }
-            }  else if(gunsayac == 3){
-                for(int j=1;j<=3;j++)
-                {
-                    String str = mylist.get(j);
-                    liste2.add(str);
-                    str = mylist.get(j+3);
-                    liste2.add(str);
-                    str = mylist.get(j+6);
-                    liste2.add(str);
-                    str = mylist.get(j+9);
-                    liste2.add(str);
-                    str = mylist.get(j+12);
-                    liste2.add(str);
-                    str = mylist.get(j+15);
-                    liste2.add(str);
-                }
-            }  else if(gunsayac == 2){
-                for(int j=1;j<=2;j++)
-                {
-                    String str = mylist.get(j);
-                    liste2.add(str);
-                    str = mylist.get(j+2);
-                    liste2.add(str);
-                    str = mylist.get(j+4);
-                    liste2.add(str);
-                    str = mylist.get(j+6);
-                    liste2.add(str);
-                    str = mylist.get(j+8);
-                    liste2.add(str);
-                    str = mylist.get(j+10);
-                    liste2.add(str);
-                }
-            }  else if(gunsayac == 1){
+            }   else if(gunsayac == 1){
                 for(int x=1;x<=6;x++)
                 {
                     String str = mylist.get(x);
@@ -396,86 +390,40 @@ public class MainActivity extends AppCompatActivity {
                 liste2.add(str);
                 lastindex3=j+25;
             }
+            if (lastindex3<121){
 
-            for(int i=lastindex3+1;i<=lastindex3+5;i++){
-                String[] parcala = mylist.get(i).split(" ");
-                for(y=0;y<parcala.length;y++){
-                    if(parcala[y].equals(tarih1) || parcala[y].equals(tarih2)|| parcala[y].equals(tarih3)){
-                        gunsayac2++;
+            }else {
+                for (int i = lastindex3 + 1; i <= lastindex3 + 5; i++) {
+                    String[] parcala = mylist.get(i).split(" ");
+                    for (y = 0; y < parcala.length; y++) {
+                        if (parcala[y].equals(tarih1) || parcala[y].equals(tarih2) || parcala[y].equals(tarih3)) {
+                            gunsayac2++;
+                        }
+                    }
+                }
+                if (gunsayac2 > 1) {
+                    for (int j = lastindex3 + 1; j <= lastindex3 + gunsayac2; j++) {
+                        String str = mylist.get(j);
+                        liste2.add(str);
+                        str = mylist.get(j + gunsayac2);
+                        liste2.add(str);
+                        str = mylist.get(j + gunsayac2 * 2);
+                        liste2.add(str);
+                        str = mylist.get(j + gunsayac2 * 3);
+                        liste2.add(str);
+                        str = mylist.get(j + gunsayac2 * 4);
+                        liste2.add(str);
+                        str = mylist.get(j + gunsayac2 * 5);
+                        liste2.add(str);
+                    }
+                } else if (gunsayac2 == 1) {
+                    for (int x = lastindex3 + 1; x <= lastindex3 + 6; x++) {
+                        String str = mylist.get(x);
+                        liste2.add(str);
                     }
                 }
             }
-            if(gunsayac2 == 5){
-                for(int j=lastindex3+1;j<=lastindex3+5;j++)
-                {
-                    String str = mylist.get(j);
-                    liste2.add(str);
-                    str = mylist.get(j+5);
-                    liste2.add(str);
-                    str = mylist.get(j+10);
-                    liste2.add(str);
-                    str = mylist.get(j+15);
-                    liste2.add(str);
-                    str = mylist.get(j+20);
-                    liste2.add(str);
-                    str = mylist.get(j+25);
-                    liste2.add(str);
-                }
-            } else if(gunsayac2 == 4){
-                for(int j=lastindex3+1;j<=lastindex3+4;j++)
-                {
-                    String str = mylist.get(j);
-                    liste2.add(str);
-                    str = mylist.get(j+4);
-                    liste2.add(str);
-                    str = mylist.get(j+8);
-                    liste2.add(str);
-                    str = mylist.get(j+12);
-                    liste2.add(str);
-                    str = mylist.get(j+16);
-                    liste2.add(str);
-                    str = mylist.get(j+20);
-                    liste2.add(str);
-                }
-            }  else if(gunsayac2 == 3){
-                for(int j=lastindex3+1;j<=lastindex3+3;j++)
-                {
-                    String str = mylist.get(j);
-                    liste2.add(str);
-                    str = mylist.get(j+3);
-                    liste2.add(str);
-                    str = mylist.get(j+6);
-                    liste2.add(str);
-                    str = mylist.get(j+9);
-                    liste2.add(str);
-                    str = mylist.get(j+12);
-                    liste2.add(str);
-                    str = mylist.get(j+15);
-                    liste2.add(str);
-                }
-            }  else if(gunsayac2 == 2){
-                for(int j=lastindex3+1;j<=lastindex3+2;j++)
-                {
-                    String str = mylist.get(j);
-                    liste2.add(str);
-                    str = mylist.get(j+2);
-                    liste2.add(str);
-                    str = mylist.get(j+4);
-                    liste2.add(str);
-                    str = mylist.get(j+6);
-                    liste2.add(str);
-                    str = mylist.get(j+8);
-                    liste2.add(str);
-                    str = mylist.get(j+10);
-                    liste2.add(str);
-                }
-            }  else if(gunsayac2 == 1){
-                for(int x=lastindex3+1;x<=lastindex3+6;x++)
-                {
-                    String str = mylist.get(x);
-                    liste2.add(str);
-                }
-            }
+
             TOTAL_LIST_ITEMS = liste2.size();
             pageCount = TOTAL_LIST_ITEMS/NUM_ITEMS_PAGE;
         }
