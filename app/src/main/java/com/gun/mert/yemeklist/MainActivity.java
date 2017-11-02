@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
@@ -73,38 +74,41 @@ public class MainActivity extends AppCompatActivity {
         btntoday = (Button) findViewById(R.id.btn_today);
         textView = (TextView) findViewById(R.id.textView);
         if (isNetworkConnected()){
-            new linkcek().execute();
-            mInterstitialAd.loadAd(new AdRequest.Builder().build());
-            btnileri.setOnClickListener(new View.OnClickListener() {
+            try {
+                new linkcek().execute();
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                btnileri.setOnClickListener(new View.OnClickListener() {
 
-                public void onClick(View v) {
-                    increment++;
-                    loadList(increment);
-                    CheckEnable();
-                    showInterstitial();
-                }
-            });
+                    public void onClick(View v) {
+                        increment++;
+                        loadList(increment);
+                        CheckEnable();
+                        showInterstitial();
+                    }
+                });
 
-            btngeri.setOnClickListener(new View.OnClickListener() {
+                btngeri.setOnClickListener(new View.OnClickListener() {
 
-                public void onClick(View v) {
-                    increment--;
-                    loadList(increment);
-                    CheckEnable();
-                    showInterstitial();
-                }
-            });
+                    public void onClick(View v) {
+                        increment--;
+                        loadList(increment);
+                        CheckEnable();
+                        showInterstitial();
+                    }
+                });
 
-            btntoday.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    list.setAdapter(null);
-                    linkcek gunobject = new linkcek();
-                    gunobject.gunubul();
-                    loadList(gunIndex);
-                    CheckEnable();
-                }
-            });
+                btntoday.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        list.setAdapter(null);
+                        linkcek gunobject = new linkcek();
+                        gunobject.gunubul();
+                        loadList(gunIndex);
+                        CheckEnable();
+                    }
+                });
+            }catch (Exception ignored){}
+
         }else {
             btntoday.setEnabled(false);
             btnileri.setEnabled(false);
@@ -119,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
         // Show the ad if it's ready. Otherwise toast and restart the game.
         if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
-        } else {
         }
     }
 
@@ -202,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
         list.setAdapter(adapter);
     }
 
-    public class linkcek extends AsyncTask<Void,Void,Void> {
+    private class linkcek extends AsyncTask<Void,Void,Void> {
         String link1;
         @Override
         protected void onPreExecute() {
@@ -226,70 +229,29 @@ public class MainActivity extends AppCompatActivity {
 
                 InputStream inputStream = url.openStream();
                 Workbook workbook = new XSSFWorkbook(inputStream);
-                Sheet datatypeSheet = workbook.getSheetAt(0);
-                Iterator<Row> iterator = datatypeSheet.iterator();
-
-                label1:
-                while (iterator.hasNext()) {
-                    Row currentRow = iterator.next();
-                    for (Cell currentCell : currentRow) {
-                        if (currentCell.getCellType() == Cell.CELL_TYPE_STRING) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                                if (Objects.equals(currentCell.getStringCellValue(), "GIDA MÜHENDİSİ") || Objects.equals(currentCell.getStringCellValue(), "gida muhendisi") || Objects.equals(currentCell.getStringCellValue(), "gıda muhendisi" )) {
-                                    break label1;
-                                }
+                Sheet sheet = workbook.getSheetAt(0);
+                for (int i = 0; i<5;i++){ //gezilecek sütun sayısı
+                    for (int j=1; j< sheet.getLastRowNum() + 1; j++) {
+                        Row row = sheet.getRow(j);
+                        Cell cell = row.getCell(i);
+                        try {
+                            if (cell.toString()!=""){
+                                if (!cell.toString().equals(" "))
+                                    mylist.add(cell.getStringCellValue());
                             }
-                            mylist.add(currentCell.getStringCellValue());
+                        }catch (NullPointerException ignored){
+
                         }
                     }
                 }
-                tatilatici(mylist);
                 listeduzenle(mylist);
 
             } catch (IOException e) {
                 e.printStackTrace();
-            }/*
-            for (int i=1;i<mylist.size();i++){
-                System.out.println(mylist.get(i)+": "+i);
-            }*/
+            }
             return null;
         }
 
-        private void tatilatici(ArrayList<String> mylist) {
-            ArrayList bulunanindex = new ArrayList();
-            int bulunan = 0;
-            for (int i=1;i<mylist.size();i++){
-                System.out.println(mylist.get(i)+": "+i);
-                if(mylist.get(i).equals("RESMİ TATİL") || mylist.get(i).equals("RESMI TATIL") || mylist.get(i).equals("TATİL") ){
-                    bulunanindex.add(i);
-                    bulunan = i;
-                }
-            }
-            if (bulunan == 14 || bulunan == 44 || bulunan == 74 || bulunan==104 ){
-                for (int i =0;i<bulunanindex.size();i++){
-                    mylist.add((Integer) bulunanindex.get(i)-8,"-");
-                    mylist.add((Integer) bulunanindex.get(i)-3,"-");
-                    mylist.add((Integer) bulunanindex.get(i)+7,"-");
-                    mylist.add((Integer) bulunanindex.get(i)+12,"-");
-                }
-            }else if (bulunan == 15 || bulunan == 45 || bulunan == 75 || bulunan==105){
-                for (int i =0;i<bulunanindex.size();i++){
-                    mylist.add((Integer) bulunanindex.get(i)-3,"-");
-                    mylist.add((Integer) bulunanindex.get(i)+5,"-");
-                    mylist.add((Integer) bulunanindex.get(i)+9,"-");
-                    mylist.add((Integer) bulunanindex.get(i)+13,"-");
-                }
-            }else if (bulunan == 16 || bulunan == 46 || bulunan == 76 || bulunan==106){
-// TODO: 6.09.2017 Tatil kodu eklenecek 
-            }else if (bulunan == 17 || bulunan == 47 || bulunan == 77 || bulunan==107){
-// TODO: 6.09.2017 tatil kodu eklenecek 
-            }else if (bulunan == 18 || bulunan == 48 || bulunan == 78 || bulunan==108){
-// TODO: 6.09.2017 tatil kodu eklenecek 
-            }
-            /*for (int i=1;i<mylist.size();i++){
-                System.out.println(mylist.get(i)+": "+i);
-            }*/
-        }
 
         @Override
         protected void onPostExecute(Void aVoid) {
@@ -300,126 +262,22 @@ public class MainActivity extends AppCompatActivity {
             textView.setVisibility(View.INVISIBLE);
         }
 
-        public void listeduzenle(ArrayList<String> mylist) {
-            int gunsayac=0,gunsayac2=0;
-            int y=0;
-            int lastindex=0,lastindex2=0,lastindex3=0;
-            String tarih1 = "2017";
-            String tarih2 = "2018";
-            String tarih3 = "2019";
-            for(int i=1;i<=5;i++){
-                String[] parcala = mylist.get(i).split(" ");
-                for(y=0;y<parcala.length;y++){
-                    if(parcala[y].equals(tarih1) || parcala[y].equals(tarih2)|| parcala[y].equals(tarih3)){
-                        gunsayac++;
-                    }
-                }
-            }
-
-            if(gunsayac > 1){
-                for(int j=1;j<=gunsayac;j++)
-                {
-                    String str = mylist.get(j);
-                    liste2.add(str);
-                    str = mylist.get(j+gunsayac);
-                    liste2.add(str);
-                    str = mylist.get(j+gunsayac*2);
-                    liste2.add(str);
-                    str = mylist.get(j+gunsayac*3);
-                    liste2.add(str);
-                    str = mylist.get(j+gunsayac*4);
-                    liste2.add(str);
-                    str = mylist.get(j+gunsayac*5);
-                    liste2.add(str);
-                }
-            }   else if(gunsayac == 1){
-                for(int x=1;x<=6;x++)
-                {
-                    String str = mylist.get(x);
-                    liste2.add(str);
-                }
-            }
-            for(int j=gunsayac*6+1;j<=gunsayac*6+5;j++)
-            {
-                String str = mylist.get(j);
-                liste2.add(str);
-                str = mylist.get(j+5);
-                liste2.add(str);
-                str = mylist.get(j+10);
-                liste2.add(str);
-                str = mylist.get(j+15);
-                liste2.add(str);
-                str = mylist.get(j+20);
-                liste2.add(str);
-                str = mylist.get(j+25);
-                liste2.add(str);
-                lastindex=j+25;
-            }
-
-            for(int j=1+lastindex;j<=lastindex+5;j++)
-            {
-                String str = mylist.get(j);
-                liste2.add(str);
-                str = mylist.get(j+5);
-                liste2.add(str);
-                str = mylist.get(j+10);
-                liste2.add(str);
-                str = mylist.get(j+15);
-                liste2.add(str);
-                str = mylist.get(j+20);
-                liste2.add(str);
-                str = mylist.get(j+25);
-                liste2.add(str);
-                lastindex2=j+25;
-            }
-
-
-            for(int j=lastindex2+1;j<=lastindex2+5;j++)
-            {
-                String str = mylist.get(j);
-                liste2.add(str);
-                str = mylist.get(j+5);
-                liste2.add(str);
-                str = mylist.get(j+10);
-                liste2.add(str);
-                str = mylist.get(j+15);
-                liste2.add(str);
-                str = mylist.get(j+20);
-                liste2.add(str);
-                str = mylist.get(j+25);
-                liste2.add(str);
-                lastindex3=j+25;
-            }
-            if (lastindex3<121){
-
-            }else {
-                for (int i = lastindex3 + 1; i <= lastindex3 + 5; i++) {
-                    String[] parcala = mylist.get(i).split(" ");
-                    for (y = 0; y < parcala.length; y++) {
-                        if (parcala[y].equals(tarih1) || parcala[y].equals(tarih2) || parcala[y].equals(tarih3)) {
-                            gunsayac2++;
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        void listeduzenle(ArrayList<String> mylist) {
+            String Gunler[] = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+            for (String aGunler : Gunler) {
+                for (int j = 0; j <= mylist.size(); j++) {
+                    try {
+                        String[] parcala = mylist.get(j).split(" ");
+                        if (Objects.equals(aGunler, parcala[0])) {
+                            for (int k = 0; k < 6; k++) {
+                                liste2.add(mylist.get(j + k)); //Bulunan gündeki yemekler sıralanıyor
+                                System.out.println("liste Hali: " + mylist.get(j + k) + ": ");
+                            }
+                            break;
                         }
-                    }
-                }
-                if (gunsayac2 > 1) {
-                    for (int j = lastindex3 + 1; j <= lastindex3 + gunsayac2; j++) {
-                        String str = mylist.get(j);
-                        liste2.add(str);
-                        str = mylist.get(j + gunsayac2);
-                        liste2.add(str);
-                        str = mylist.get(j + gunsayac2 * 2);
-                        liste2.add(str);
-                        str = mylist.get(j + gunsayac2 * 3);
-                        liste2.add(str);
-                        str = mylist.get(j + gunsayac2 * 4);
-                        liste2.add(str);
-                        str = mylist.get(j + gunsayac2 * 5);
-                        liste2.add(str);
-                    }
-                } else if (gunsayac2 == 1) {
-                    for (int x = lastindex3 + 1; x <= lastindex3 + 6; x++) {
-                        String str = mylist.get(x);
-                        liste2.add(str);
+                    } catch (RuntimeException ignored) {
+
                     }
                 }
             }
@@ -428,7 +286,13 @@ public class MainActivity extends AppCompatActivity {
             pageCount = TOTAL_LIST_ITEMS/NUM_ITEMS_PAGE;
         }
 
-        public int gunubul(){
+        private int gunubul(){
+            String aylar[]={"Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"};
+            Calendar simdi=Calendar.getInstance();
+            System.out.println(aylar[simdi.get(Calendar.MONTH)]);
+            System.out.println(simdi.get(Calendar.DATE));
+            System.out.println(simdi.get(Calendar.YEAR));
+
             bugun = Calendar.getInstance().get(Calendar.DATE);
 
             int dayofweek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
@@ -447,8 +311,7 @@ public class MainActivity extends AppCompatActivity {
                         increment = i/6;
                         return i;
                     }
-                }catch (NumberFormatException e){
-                    continue;
+                }catch (NumberFormatException ignored){
                 }
             }
             return 0;
