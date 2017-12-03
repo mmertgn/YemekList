@@ -206,7 +206,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class linkcek extends AsyncTask<Void,Void,Void> {
-        String link1;
+        String link1,link2;
+        URL url;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -225,7 +226,18 @@ public class MainActivity extends AppCompatActivity {
                 Elements info2 = info.select("a[class=menuStil1");
                 link1 = info2.attr("href");
                 System.out.println("link:"+link1);
-                URL url = new URL("http://sks.karabuk.edu.tr"+link1);
+
+                if (link1.contains("pdf")){
+                    Document doc1 = Jsoup.connect("http://sks.karabuk.edu.tr/icerikGoster.aspx?K=S&id=55&BA=index.aspx").get();
+                    Elements info3 = doc1.select("span[id=txtIcerik");
+                    Elements info4 = info3.select("a");
+                    link2 = info4.attr("href");
+                    System.out.println("link:"+link2);
+                     url = new URL("http://sks.karabuk.edu.tr"+link2);
+                }else {
+                    url = new URL("http://sks.karabuk.edu.tr" + link1);
+                }
+
 
                 InputStream inputStream = url.openStream();
                 Workbook workbook = new XSSFWorkbook(inputStream);
